@@ -1,0 +1,53 @@
+# Stages
+# Stage-1:
+  # Task-1: Build Docker Image and push to ECR
+  # Task-2: Copy kube-manifest files to Build Artifact Directory
+  # Task-3: Publish build articats to Azure Pipelines
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+# Variables
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+# Build Stage 
+- stage: Build
+  displayName: Build Stage
+  jobs:
+  - job: Build
+    displayName: Build Job
+    steps: 
+
+    # Task-1: Build Docker Image and push to ECR
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'tf-aws'
+        repository: 'vinod_demo'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+          $(tag)
+
+    ## Publish Artifacts
+
+    # Task-2: Copy files (Copy files from a source folder to target folder)
+    # Source Directory: $(System.DefaultWorkingDirectory)/kube-manifests
+    # Target Directory: $(Build.ArtifactStagingDirectory)   
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)/kube-manifests'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        OverWrite: true
+        
+    # Task-3: Publish build artifacts (Publish build to Azure Pipelines)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
