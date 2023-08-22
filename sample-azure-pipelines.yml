@@ -26,7 +26,7 @@ stages:
     # Task-1: Build Docker Image and push to ECR
     - task: Docker@2
       inputs:
-        containerRegistry: 'tf-aws'
+        containerRegistry: 'docker-registry-pipeline'
         repository: 'vinod_demo'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
