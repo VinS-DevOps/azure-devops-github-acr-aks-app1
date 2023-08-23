@@ -45,7 +45,7 @@ stages:
         pushTag: latest
         repositoryName: $(DOCKER_REPOSITORY_NAME)
 
-    ## Publish Artifacts
+    # Publish Artifacts
 
     # Task-3: Copy files (Copy files from a source folder to target folder)
     # Source Directory: $(System.DefaultWorkingDirectory)/kube-manifests
