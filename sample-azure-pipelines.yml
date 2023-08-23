@@ -37,7 +37,7 @@ stages:
     # Task-2: Push Docker Image to ECR 
     - task: ECRPushImage@1
       inputs:
-        awsCredentials: 'tf-aws'
+        awsCredentials: 'cloudformation_connection'
         regionName: "us-east-1"
         imageSource: 'imagename'
         sourceImageName: $(DOCKER_REPOSITORY_NAME)
