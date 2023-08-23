@@ -1,8 +1,9 @@
 # Stages
 # Stage-1:
-  # Task-1: Build Docker Image and push to ECR
-  # Task-2: Copy kube-manifest files to Build Artifact Directory
-  # Task-3: Publish build articats to Azure Pipelines
+  # Task-1: Build Docker Image
+  # Task-2: Push Docker Image to ECR
+  # Task-3: Copy kube-manifest files to Build Artifact Directory
+  # Task-4: Publish build articats to Azure Pipelines
 
 trigger:
 - master
